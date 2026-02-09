@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galaxia - 11A</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; color: #333; }
+        * { box-sizing: border-box; }
+
+        .header { 
+            background: radial-gradient(circle at top right, #3b82f6, #1e3a8a);
+            color: white; 
+            padding: 35px 25px; 
+            border-radius: 0 0 35px 35px; 
+            box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.4);
+            display: flex; 
+            align-items: center; 
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+               
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .logo-sekolah { 
+            width: 70px; 
+            height: 70px; 
+            object-fit: contain; 
+            /* Glow effect di belakang logo */
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); 
+            z-index: 1;
+            flex-shrink: 0; 
+        }
+        
+        .header-text { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            z-index: 1;
+        }
+        
+        .header-text h1 { 
+            margin: 0; 
+            font-family: 'Cinzel', serif; /* Font Mewah */
+            font-size: 28px; 
+            font-weight: 800;
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            line-height: 1.1; 
+                        
+            background: linear-gradient(to bottom, #ffffff, #dbeafe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .header-text .sub-title { 
+            font-family: 'Poppins', sans-serif;
+            margin: 5px 0 2px 0; 
+            font-size: 13px; 
+            font-weight: 500; 
+            letter-spacing: 1.5px;
+            color: #bfdbfe; /* Biru muda pucat agar kontras */
+            text-transform: uppercase;
+        }
+        
+        .header-text .address { 
+            font-family: 'Poppins', sans-serif;
+            margin: 0; 
+            font-size: 10px; 
+            font-weight: 300;
+            opacity: 0.8; 
+            line-height: 1.4; 
+            max-width: 250px; 
+            margin-top: 5px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 5px;
+            display: inline-block;
+        }
+        
+        .content { padding: 20px; max-width: 600px; margin: auto; }
+        .section-title { font-size: 15px; font-weight: bold; color: #1e3a8a; margin: 25px 0 12px 5px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { width: 18px; height: 18px; }
+        
+        .btn-refresh { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 20px; font-size: 11px; display: flex; align-items: center; gap: 5px; cursor: pointer; transition: 0.3s; }
+        .btn-refresh:active { transform: scale(0.9); opacity: 0.8; }
+        .spin { animation: rotation 0.8s infinite linear; }
+        @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(359deg); } }
+        
+        #box-pengumuman { background: #e3f2fd; padding: 15px; border-radius: 12px; font-size: 14px; border-left: 5px solid #1e3a8a; color: #1e3a8a; font-weight: 500; }
+        .reload-info { font-size: 11px; color: #64748b; margin: 8px 0 0 5px; font-style: italic; }
+        
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .menu-card { background: white; padding: 20px 10px; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s; border: none; }
+        .menu-card:active { transform: scale(0.95); background-color: #f8fafc; }
+        .menu-card i { color: #3b82f6; margin-bottom: 10px; width: 32px; height: 32px; }
+        .menu-card span { font-size: 14px; font-weight: 600; color: #333; text-align: center; }
+        
+        .album-scroll { display: flex; overflow-x: auto; gap: 15px; padding: 5px 5px 15px 5px; scroll-snap-type: x mandatory; }
+        .album-scroll::-webkit-scrollbar { display: none; }
+        .album-item { flex: 0 0 85%; aspect-ratio: 16 / 9; scroll-snap-align: center; border-radius: 15px; overflow: hidden; background: #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
+        .album-item img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .org-box { background: white; padding: 5px 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .org-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f8f8f8; font-size: 14px; }
+        .org-item:last-child { border-bottom: none; }
+        
+        .comment-box-wrapper { padding: 20px; }
+        
+        .comment-bubble { 
+            background: #f1f5f9; padding: 12px; border-radius: 12px; margin-bottom: 10px; 
+            border-left: 4px solid #3b82f6; word-wrap: break-word; overflow-wrap: break-word; 
+            word-break: break-word; max-width: 100%; 
+            display: flex; gap: 10px;
+        }
+        
+        .comment-avatar-img {
+            width: 35px; height: 35px; border-radius: 50%; background: #ddd; flex-shrink: 0;
+            border: 1px solid #ccc; object-fit: cover;
+        }
+
+        .comment-content { flex: 1; }
+
+        .input-style { 
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; 
+            font-size: 14px; font-family: inherit; background-color: #fff; display: block; 
+        }
+        textarea.input-style { resize: none; }
+        
+        .username-group { display: flex; gap: 10px; align-items: center; }
+                
+        .avatar-upload-container {
+            position: relative; width: 45px; height: 45px; flex-shrink: 0;
+        }
+
+        #current-avatar-display {
+            width: 100%; height: 100%; border-radius: 50%; border: 2px solid #3b82f6; 
+            cursor: pointer; overflow: hidden; background: #fff; 
+            transition: transform 0.2s; object-fit: cover;
+        }
+        
+        .icon-camera-overlay {
+            position: absolute; bottom: -2px; right: -2px; background: #1e3a8a; color: white;
+            border-radius: 50%; width: 18px; height: 18px; display: flex; 
+            align-items: center; justify-content: center; font-size: 10px; pointer-events: none;
+            border: 2px solid white;
+        }
+
+        #current-avatar-display:active { transform: scale(0.9); }
+
+        #comment-name { flex: 1; background-color: #f8fafc; font-weight: bold; color: #1e3a8a; }
+        #comment-name:disabled { background-color: #e2e8f0; color: #64748b; cursor: not-allowed; border: 1px solid #cbd5e1; }
+        
+        #btn-edit-name { 
+            background: #e2e8f0; border: none; border-radius: 10px; padding: 10px; 
+            cursor: pointer; color: #475569; transition: 0.2s; display: flex; align-items: center; justify-content: center; 
+        }
+        #btn-edit-name:active { transform: scale(0.9); }
+        
+        .social-container { display: flex; gap: 12px; margin-top: 5px; }
+        .social-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 12px; text-decoration: none; color: white !important; font-size: 14px; font-weight: bold; }
+        .wa { background-color: #25d366; }
+        .ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+        .modal-content { background: white; width: 85%; max-width: 400px; padding: 25px; border-radius: 20px; position: relative; text-align: center; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 28px; cursor: pointer; color: #666; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        table th, table td { border: 1px solid #eee; padding: 12px; text-align: left; font-size: 13px; }
+        table th { background-color: #3b82f6; color: white; }
+        
+        footer { text-align: center; padding: 40px; color: #999; font-size: 11px; }
+                
+        .custom-alert-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+            backdrop-filter: blur(3px); /* Efek blur di belakang popup */
+        }
+        
+        .custom-alert-box {
+            background: white; padding: 25px 30px; border-radius: 20px;
+            width: 85%; max-width: 320px; text-align: center;
+            transform: scale(0.8); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 30px rgba(30, 58, 138, 0.25);
+            position: relative; overflow: hidden;
+        }
+                
+        .custom-alert-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(to right, #3b82f6, #1e3a8a);
+        }
+        
+        .custom-alert-overlay.active { opacity: 1; visibility: visible; }
+        .custom-alert-overlay.active .custom-alert-box { transform: scale(1); }
+        
+        .alert-icon-circle {
+            width: 50px; height: 50px; background: #eff6ff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px auto; color: #1e3a8a;
+        }
+        
+        .alert-btn-ok {
+            background: #1e3a8a; color: white; border: none; width: 100%;
+            padding: 12px; border-radius: 12px; margin-top: 20px;
+            font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px;
+        }
+        .alert-btn-ok:active { transform: scale(0.96); opacity: 0.9; }
+                
+        .badge-role {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 800;
+            margin-left: 5px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .role-admin {
+            background: #dbeafe; /* Biru muda */
+            color: #1e40af; /* Biru tua */
+            border: 1px solid #93c5fd;
+        }
+        
+        .role-mod {
+            background: #dcfce7; /* Hijau muda */
+            color: #166534; /* Hijau tua */
+            border: 1px solid #86efac;
+        }
+        
+        .verified-icon {
+            width: 12px; height: 12px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img class="logo-sekolah" src="https://iili.io/fSKbmap.png" alt="Logo">
+    <div class="header-text">
+        <h1>APOSTROPHE</h1> 
+        <p class="sub-title">XI-A SMAN 1 WATES | 2026</p>
+        <p class="address">Jl. Terbahsari No.1, Terbah, Kec. Wates, DIY 55651</p>
+    </div>
+</div>
+
+<div class="content">
+    <div class="section-title" style="justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="info"></i> Info Admin
+        </div>
+        <button class="btn-refresh" onclick="muatData()">
+            <i data-lucide="refresh-cw" id="icon-refresh" style="width: 14px; height: 14px;"></i> Refresh
+        </button>
+    </div>
+    <div id="box-pengumuman">Memuat info terbaru...</div>
+    <div class="reload-info">Tekan tombol refresh untuk info terbaru!</div>
+
+    <div class="section-title">
+        <i data-lucide="layout-grid"></i> Menu Utama
+    </div>
+    <div class="grid-menu">
+        <div class="menu-card" onclick="openModal('modalJadwal')">
+            <i data-lucide="calendar"></i>
+            <span>Jadwal Mapel</span>
+        </div>
+        <div class="menu-card" onclick="openModal('modalPiket')">
+            <i data-lucide="trash-2" style="color:#f59e0b"></i>
+            <span>Jadwal Piket</span>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <i data-lucide="image"></i> Album Kelas
+    </div>
+    <div class="album-scroll" id="container-album">
+        <div style="padding: 20px; color: #888;">Memuat foto...</div>
+    </div>
+
+    <div class="section-title">
+        <i data-lucide="users"></i> Struktur Kelas
+    </div>
+    <div class="org-box">
+        <div class="org-item"><span>Wali Kelas</span><strong>Bu Muktinem, S.Pd.</strong></div>
+        <div class="org-item"><span>Ketua Kelas</span><strong>Irfan Hakim M.W</strong></div>
+        <div class="org-item"><span>Wakil Ketua</span><strong>Wisnu Faqih A.</strong></div>
+        <div class="org-item"><span>Bendahara 1</span><strong>Annisa Arditya P.</strong></div>
+        <div class="org-item"><span>Bendahara 2</span><strong>Khinanti Zaitunisa R.</strong></div>
+        <div class="org-item"><span>Sekretaris 1</span><strong>Atikah Dwi W.</strong></div>
+        <div class="org-item"><span>Sekretaris 2</span><strong>Hayu Aleia K.</strong></div>
+    </div>
+
+    <div class="section-title">
+        <i data-lucide="message-square"></i> Komentar
+    </div>
+    <div class="org-box comment-box-wrapper">
+        <div id="comment-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column;">
+            <p style="text-align: center; color: #999; font-size: 13px;">Menghubungkan ke database...</p>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #eee; padding-top: 15px;">
+            <div class="username-group">
+                <div class="avatar-upload-container" onclick="triggerUpload()" title="Klik untuk ganti foto profil kapan saja">
+                    <img id="current-avatar-display" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" alt="Avatar">
+                    <div class="icon-camera-overlay">
+                        <i data-lucide="camera" style="width:10px; height:10px;"></i>
+                    </div>
+                </div>
+                <input type="file" id="file-upload" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+
+                <input type="text" id="comment-name" class="input-style" maxlength="15" placeholder="Username (5-15 huruf/angka/titik)">
+                
+                <button id="btn-edit-name" title="Ganti Username (Dibatasi)">
+                    <i data-lucide="edit-3" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            
+            <small id="notif-username" style="font-size: 10px; color: #dc2626; display: none; margin-top:-5px; margin-left: 60px;"></small>
+
+            <textarea id="comment-text" class="input-style" placeholder="Tulis pesan..." rows="2"></textarea>
+            
+            <button id="btn-kirim" style="background: #1e3a8a; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">
+                Kirim
+            </button>
+        </div>
+    </div>
+    
+    <div class="section-title">
+        <i data-lucide="share-2"></i> Stay Connected
+    </div>
+    <div class="social-container">
+        <a href="https://whatsapp.com/channel/0029VbBB7fG0QeadTEEK2h2G" class="social-btn wa">
+            <i data-lucide="message-circle"></i> WhatsApp
+        </a>
+        <a href="https://www.instagram.com/apostrophe.212?igsh=bzc5cjk4cGZ1M2dw" class="social-btn ig">
+            <i data-lucide="instagram"></i> Instagram
+        </a>
+    </div>
+</div>
+
+<div id="modalJadwal" class="modal" onclick="closeModal('modalJadwal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal('modalJadwal')">&times;</span>
+        <h3 style="color:#1e3a8a; margin-top:0">📅 Jadwal Mapel</h3>
+        <table>
+            <tr><th>Hari</th><th>Mata Pelajaran</th></tr>
+            <tr><td>Senin</td><td>PPKn, Fisika, Kimia, Mat TL</td></tr>
+            <tr><td>Selasa</td><td>Mat TL, Infor, Kimia, Bindo, BK</td></tr>
+            <tr><td>Rabu</td><td>Binggris, Bindo, Fisika, Infor</td></tr>
+            <tr><td>Kamis</td><td>Pend Agama, Seni musik, Matwa, Bjawa</td></tr>
+            <tr><td>Jumat</td><td>PJOK, Sejarah, Matwa</td></tr>
+        </table>
+    </div>
+</div>
+
+<div id="modalPiket" class="modal" onclick="closeModal('modalPiket')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal('modalPiket')">&times;</span>
+        <h3 style="color:#f59e0b; margin-top:0">🧹 Jadwal Piket</h3>
+        <table>
+            <tr><th>Hari</th><th>Petugas</th></tr>
+            <tr><td>Senin</td><td>syifaur, natasya, sarah, bimaestro, abdi, candra, ivni, vera</td></tr>
+            <tr><td>Selasa</td><td>reynaldi, bayu, nisa, qory, hera, khinan, laily</td></tr>
+            <tr><td>Rabu</td><td>berlian, ara, dika, khasan, daffa, nabila, nundif</td></tr>
+            <tr><td>Kamis</td><td>fadhil, cian, wisnu, malsi, nayla, hakim, aji</td></tr>
+            <tr><td>Jumat</td><td>atikah, esti, andhika putra, naela, affan, satria, rifat</td></tr>
+        </table>
+    </div>
+</div>
+
+<div id="modalFoto" class="modal" onclick="closeModal('modalFoto')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal('modalFoto')">&times;</span>
+        <img id="img-zoom" style="width:100%; border-radius:10px;" src="">
+    </div>
+</div>
+
+<div id="customAlert" class="custom-alert-overlay">
+    <div class="custom-alert-box">
+        <div class="alert-icon-circle">
+            <i data-lucide="info" id="alertIcon"></i>
+        </div>
+        <h3 id="alertTitle" style="margin:0 0 8px; color:#1e3a8a; font-family:'Poppins',sans-serif;">Pemberitahuan</h3>
+        <p id="alertMessage" style="color:#64748b; font-size:13px; margin:0; line-height:1.5;"></p>
+        <button class="alert-btn-ok" onclick="closeCustomAlert()">Kembali</button>
+    </div>
+</div>
+
+
+<footer>&copy; 2026 11A Casello Official</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBwVD34UH8dDs6HI8nKkMQThtxIQjPzbKM",
+        authDomain: "chat-80360.firebaseapp.com",
+        databaseURL: "https://chat-80360-default-rtdb.asia-southeast1.firebasedatabase.app", 
+        projectId: "chat-80360",
+        storageBucket: "chat-80360.firebasestorage.app",
+        messagingSenderId: "334898398273",
+        appId: "1:334898398273:web:d6633fc99657c1ebc632c0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const commentsRef = ref(db, 'komentar');
+
+    const btnKirim = document.getElementById('btn-kirim');
+    const inputNama = document.getElementById('comment-name');
+    const inputPesan = document.getElementById('comment-text');
+    const list = document.getElementById('comment-list');
+    const btnEditName = document.getElementById('btn-edit-name');
+    const notifUsername = document.getElementById('notif-username');
+    const avatarDisplay = document.getElementById('current-avatar-display');
+
+    // KONFIGURASI
+    const KEY_NAME = 'user_galaxia_name';
+    const KEY_TIME = 'user_galaxia_time';
+    const KEY_AVATAR = 'user_galaxia_avatar_custom'; 
+    const DAYS_LIMIT = 15;
+
+    // Default Avatar jika belum ada
+    // Default Avatar jika belum ada (Style WA/IG/TikTok)
+    let currentAvatar = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
+    // 1. Cek LocalStorage saat loading
+    function initUser() {
+        const savedName = localStorage.getItem(KEY_NAME);
+        const savedAvatar = localStorage.getItem(KEY_AVATAR);
+        
+        if (savedAvatar) {
+            currentAvatar = savedAvatar;
+            avatarDisplay.src = currentAvatar;
+        }
+
+        if (savedName) {
+            inputNama.value = savedName;
+            inputNama.disabled = true;
+        }
+    }
+    initUser();
+
+    // 2. EXPOSE functions ke global window agar bisa dipanggil HTML
+    window.triggerUpload = function() {
+        // HAPUS VALIDASI DISABLED DI SINI
+        // Agar bisa upload kapan saja
+        document.getElementById('file-upload').click();
+    };
+
+    window.handleFileUpload = function(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            
+            // Validasi ukuran file awal (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                window.showGalaxiaAlert("Foto terlalu besar! Ukuran maksimal hanya 5MB.", "Gagal Upload", true);
+            }
+
+            // Proses Kompresi Gambar
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Kita kecilkan foto jadi thumbnail
+                    const maxWidth = 150; 
+                    const scaleFactor = maxWidth / img.width;
+                    const newWidth = maxWidth;
+                    const newHeight = img.height * scaleFactor;
+
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                    // Konversi ke Base64 format JPEG kualitas rendah
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    // Tampilkan 
+                    currentAvatar = compressedDataUrl;
+                    avatarDisplay.src = currentAvatar;
+
+                    // SIMPAN LANGSUNG KE LOCALSTORAGE
+                    // Supaya kalau di-refresh sebelum komen, fotonya tetap ada
+                    localStorage.setItem(KEY_AVATAR, currentAvatar);
+                }
+            }
+        }
+    };
+
+    // 3. Logic Tombol Edit Username (Hanya untuk Nama)
+    btnEditName.addEventListener('click', () => {
+        const lastChanged = localStorage.getItem(KEY_TIME);
+        const now = Date.now();
+        const limitMs = DAYS_LIMIT * 24 * 60 * 60 * 1000;
+
+        if (!lastChanged || (now - lastChanged > limitMs)) {
+            inputNama.disabled = false;
+            inputNama.focus();
+            notifUsername.style.display = 'none';
+            window.showGalaxiaAlert("Silakan masukkan nama baru Anda di kolom username.", "Ganti Nama");
+        } else {
+            const diff = now - lastChanged;
+            const sisaHari = Math.ceil((limitMs - diff) / (1000 * 60 * 60 * 24));
+            notifUsername.innerText = `Username terkunci. Bisa ganti dalam ${sisaHari} hari.`;
+            notifUsername.style.display = 'block';
+        }
+    });
+
+    // 4. Logic Kirim Komentar
+        // --- FUNGSI VALIDASI USERNAME ---
+    const cekValidasiUsername = (username) => {
+        // 1. Cek Panjang (5 - 15 Karakter)
+        if (username.length < 5 || username.length > 15) {
+            return "Panjang username harus antara 5 sampai 15 karakter.";
+        }
+
+        // 2. Cek Karakter (Hanya Huruf a-z, Angka 0-9, dan Titik .)
+        // Regex ini melarang spasi, @, &, -, dll secara otomatis
+        const regexKarakter = /^[a-zA-Z0-9.]+$/;
+        if (!regexKarakter.test(username)) {
+            return "Username hanya boleh berisi Huruf, Angka, dan Titik (.). Dilarang menggunakan Spasi atau Simbol (@, &, -, dll).";
+        }
+
+        // 3. Cek Posisi Titik (Tidak boleh di awal, di akhir, atau berurutan '..')
+        if (username.startsWith('.') || username.endsWith('.') || username.includes('..')) {
+            return "Format titik (.) tidak valid. Tidak boleh di awal/akhir atau berurutan.";
+        }
+
+        // 4. Cek Istilah Terlarang (Ekstensi Domain)
+        const lowerName = username.toLowerCase();
+        if (lowerName.includes('.com') || lowerName.includes('.net') || lowerName.includes('.org') || lowerName.includes('.id')) {
+            return "Username tidak boleh mengandung ekstensi domain (.com, .net, dll).";
+        }
+
+        return null; // Lolos Validasi (Tidak ada error)
+    };
+
+    btnKirim.addEventListener('click', () => {
+        let rawName = inputNama.value.trim(); // Nama asli yg diketik user
+        const text = inputPesan.value.trim();
+        
+        // --- KONFIGURASI PASSWORD (GANTI DI SINI) ---
+        const PASS_ADMIN = "admin123";  // Password untuk Admin
+        const PASS_MOD   = "mod123";    // Password untuk Moderator
+
+        // --- 1. VALIDASI INPUT KOSONG ---
+        if(!rawName) { 
+            window.showGalaxiaAlert("Kolom username tidak boleh kosong!", "Ups...", true); 
+            return; 
+        }
+        if(!text) { 
+            window.showGalaxiaAlert("Tulis pesannya dulu dong.", "Pesan Kosong", true); 
+            return; 
+        }
+
+        // --- 2. SISTEM DETEKSI ROLE & PASSWORD ---
+        let finalName = rawName;
+        let userRole = 'member'; // Default rakyat biasa
+
+        // A. JIKA LOGIN SEBAGAI ADMIN
+        if (rawName === 'sudo-admin') {
+            // Minta Password
+            let inputPass = prompt("🔒 Masukkan Password Admin:");
+            
+            if (inputPass === PASS_ADMIN) {
+                finalName = "Lᴜᴄɪғᴇʀ"; 
+                userRole = 'admin';
+            } else {
+                window.showGalaxiaAlert("Password Admin Salah!", "Akses Ditolak", true);
+                return; 
+            }
+        } 
+        
+        else if (rawName === 'sudo-mod') {            
+            let inputPass = prompt("🛡️ Masukkan Password Moderator:");
+            
+            if (inputPass === PASS_MOD) {
+                finalName = "🛡️ Moderator"; 
+                userRole = 'moderator';
+            } else {
+                window.showGalaxiaAlert("Password Moderator Salah!", "Akses Ditolak", true);
+                return; 
+            }
+        }
+        
+        else {            
+            if (rawName.toLowerCase().includes('admin') || rawName.toLowerCase().includes('moderator')) {
+                window.showGalaxiaAlert("Maaf, nama 'Admin' atau 'Moderator' dilindungi sistem.", "Dilarang", true);
+                return;
+            }
+            
+            const errorMsg = cekValidasiUsername(rawName);
+            if (errorMsg) {
+                window.showGalaxiaAlert(errorMsg, "Username Tidak Valid", true);
+                return;
+            }
+        }
+        
+        btnKirim.disabled = true;
+        btnKirim.innerText = "Mengirim...";
+        
+        if (userRole === 'member' && !inputNama.disabled) {
+            localStorage.setItem(KEY_NAME, finalName);
+            localStorage.setItem(KEY_TIME, Date.now());
+            inputNama.disabled = true;
+            notifUsername.style.display = 'none';
+        }
+        
+        push(commentsRef, { 
+            nama: finalName, 
+            pesan: text, 
+            avatar: currentAvatar, 
+            role: userRole, 
+            waktu: serverTimestamp() 
+        }).then(() => {
+            inputPesan.value = "";
+            btnKirim.disabled = false;
+            btnKirim.innerText = "Kirim";
+            
+            if(userRole !== 'member') {
+                inputNama.value = ""; 
+            }
+        }).catch((err) => {
+            window.showGalaxiaAlert("Error: " + err.message, "Gagal", true);
+            btnKirim.disabled = false;
+            btnKirim.innerText = "Kirim";
+        });
+    });
+    
+    onValue(commentsRef, (snapshot) => {
+        list.innerHTML = "";
+        if (snapshot.exists()) {
+            snapshot.forEach((child) => {
+                const data = child.val();
+                                
+                let waktuTampil = "";
+                if (data.waktu) {
+                    const date = new Date(data.waktu);
+                    const jam = date.getHours().toString().padStart(2, '0');
+                    const menit = date.getMinutes().toString().padStart(2, '0');
+                    const tgl = date.getDate().toString().padStart(2, '0');
+                    const bln = (date.getMonth() + 1).toString().padStart(2, '0');
+                    waktuTampil = `${jam}:${menit} ${tgl}/${bln}`;
+                }
+                
+                const userAvatar = data.avatar || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
+                // LOGIKA BADGE HTML
+                let badgeHTML = "";
+                if (data.role === 'admin') {
+                    // Icon Verifikasi Biru + Teks Admin
+                    badgeHTML = `
+                        <span class="badge-role role-admin">
+                            ADMIN <i data-lucide="check-circle-2" class="verified-icon"></i>
+                        </span>`;
+                } else if (data.role === 'moderator') {
+                    // Icon Shield Hijau + Teks Mod
+                    badgeHTML = `
+                        <span class="badge-role role-mod">
+                            MOD <i data-lucide="shield-check" class="verified-icon"></i>
+                        </span>`;
+                }
+
+                const div = document.createElement('div');
+                div.className = "comment-bubble";
+                
+                // Tambahkan style border khusus jika admin
+                if(data.role === 'admin') div.style.borderLeft = "4px solid #1e40af"; 
+                if(data.role === 'moderator') div.style.borderLeft = "4px solid #166534";
+
+                div.innerHTML = `
+                    <img src="${userAvatar}" class="comment-avatar-img" alt="pic">
+                    <div class="comment-content">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+                            <div style="display:flex; align-items:center;">
+                                <strong style="font-size:12px; color:#1e3a8a;">${data.nama}</strong>
+                                ${badgeHTML} 
+                            </div>
+                            <small style="font-size:10px; color:#94a3b8;">${waktuTampil}</small>
+                        </div>
+                        <span style="font-size:14px; color:#334155; display: block; line-height: 1.4;">${data.pesan}</span>
+                    </div>
+                `;
+                list.prepend(div); 
+            });
+            // Refresh icon lucide untuk badge baru
+            lucide.createIcons();
+        } else {
+            list.innerHTML = "<p style='text-align:center; color:#999; font-size:13px;'>Belum ada komentar.</p>";
+        }
+    });
+</script>
+
+<script>
+    // UI Helper (Non-Module)
+    lucide.createIcons();
+    function openModal(id) { document.getElementById(id).style.display = "flex"; }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    function zoomFoto(url) { document.getElementById('img-zoom').src = url; openModal('modalFoto'); }
+
+    async function muatData() {
+        const refreshIcon = document.getElementById('icon-refresh');
+        const box = document.getElementById('box-pengumuman');
+        const container = document.getElementById('container-album');
+        refreshIcon.classList.add('spin');
+        box.style.opacity = "0.5";
+
+        const linkGist = "https://gist.githubusercontent.com/rnld-i/ba0bd11035ab2d07089962bad2d39503/raw/gistfile1.txt";
+        try {
+            const response = await fetch(linkGist + "?t=" + new Date().getTime());
+            const teks = await response.text();
+            const baris = teks.split('\n');
+            if(baris[0]) box.innerText = baris[0];
+            const fotoLinks = baris.slice(1).filter(link => link.trim().startsWith('http'));
+            if(fotoLinks.length > 0) {
+                container.innerHTML = "";
+                fotoLinks.forEach(url => {
+                    const div = document.createElement('div');
+                    div.className = 'album-item';
+                    div.onclick = () => zoomFoto(url.trim());
+                    div.innerHTML = `<img src="${url.trim()}" loading="lazy">`;
+                    container.appendChild(div);
+                });
+            }
+        } catch (err) { box.innerText = "Gagal memuat info."; }
+        finally { setTimeout(() => { refreshIcon.classList.remove('spin'); box.style.opacity = "1"; }, 500); }
+    }
+    window.addEventListener('DOMContentLoaded', muatData);
+            
+    function showGalaxiaAlert(message, title = "Info Galaxia", isError = false) {
+        const overlay = document.getElementById('customAlert');
+        const titleEl = document.getElementById('alertTitle');
+        const msgEl = document.getElementById('alertMessage');
+        const iconEl = document.getElementById('alertIcon');
+        
+        titleEl.innerText = title;
+        msgEl.innerText = message; // Bisa handle \n untuk baris baru
+        
+        // Ganti warna/icon jika error
+        if (isError) {
+            titleEl.style.color = "#dc2626"; // Merah
+            iconEl.setAttribute('data-lucide', 'alert-triangle'); // Icon segitiga
+            iconEl.style.color = "#dc2626";
+            document.querySelector('.alert-icon-circle').style.background = "#fef2f2";
+        } else {
+            titleEl.style.color = "#1e3a8a"; // Biru
+            iconEl.setAttribute('data-lucide', 'info'); // Icon info
+            iconEl.style.color = "#1e3a8a";
+            document.querySelector('.alert-icon-circle').style.background = "#eff6ff";
+        }
+        
+        // Refresh icon karena kita ganti atribut data-lucide
+        lucide.createIcons();
+        
+        overlay.classList.add('active');
+    }
+
+    function closeCustomAlert() {
+        document.getElementById('customAlert').classList.remove('active');
+    }
+    
+    window.showGalaxiaAlert = showGalaxiaAlert;
+    
+</script>
+</body>
+</html>
+
+
