@@ -696,6 +696,18 @@
         </div>
     </footer>
 
+    <!-- Custom Alert Modal -->
+    <div id="alertModal" class="modal fixed inset-0 z-[60] bg-black/50 items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center transform transition-all" onclick="event.stopPropagation()">
+            <div id="alertModalIcon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"></div>
+            <h3 id="alertModalTitle" class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2"></h3>
+            <p id="alertModalMessage" class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6"></p>
+            <button onclick="closeAlertModal()" class="px-8 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full transition">
+                OK
+            </button>
+        </div>
+    </div>
+
     <!-- Image Modal -->
     <div id="imageModal" class="modal fixed inset-0 z-50 bg-black/90 items-center justify-center p-4" onclick="closeModal()">
         <button class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300" onclick="closeModal()">
@@ -748,7 +760,7 @@
 
         // Show Student Detail (Simple Alert for demo)
         function showStudentDetail(name) {
-            alert(`Detail Siswa:\nNama: ${name}\nKelas: 11 A\nStatus: Aktif`);
+            showAlert('info', 'Detail Siswa', `Nama: ${name}\nKelas: 11 A\nStatus: Aktif`);
         }
 
         // Modal Functions
@@ -760,6 +772,29 @@
 
         function closeModal() {
             document.getElementById('imageModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Custom Alert Modal
+        function showAlert(type, title, message) {
+            const icons = {
+                success: { bg: 'bg-green-100', color: 'text-green-500', icon: '✓' },
+                error:   { bg: 'bg-red-100',   color: 'text-red-500',   icon: '✕' },
+                warning: { bg: 'bg-yellow-100', color: 'text-yellow-500', icon: '!' },
+                info:    { bg: 'bg-indigo-100', color: 'text-indigo-500', icon: 'i' },
+            };
+            const t = icons[type] || icons.info;
+            const iconEl = document.getElementById('alertModalIcon');
+            iconEl.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold ' + t.bg + ' ' + t.color;
+            iconEl.textContent = t.icon;
+            document.getElementById('alertModalTitle').textContent = title;
+            document.getElementById('alertModalMessage').textContent = message;
+            document.getElementById('alertModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
@@ -882,12 +917,12 @@
             const text = document.getElementById('commentText').value.trim();
 
             if (!name || !text) {
-                alert('Mohon isi nama dan komentar Anda!');
+                showAlert('warning', 'Form Tidak Lengkap', 'Mohon isi nama dan komentar Anda!');
                 return;
             }
 
             if (!database) {
-                alert('Firebase belum dikonfigurasi. Silakan hubungi administrator.');
+                showAlert('error', 'Konfigurasi Error', 'Firebase belum dikonfigurasi. Silakan hubungi administrator.');
                 return;
             }
 
@@ -914,7 +949,7 @@
                 })
                 .catch((error) => {
                     console.error('Error adding comment:', error);
-                    alert('Gagal menambahkan komentar. Silakan coba lagi.');
+                    showAlert('error', 'Gagal Mengirim', 'Gagal menambahkan komentar. Silakan coba lagi.');
                 });
         }
 
