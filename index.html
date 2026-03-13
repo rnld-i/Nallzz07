@@ -1,1132 +1,789 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelas 11 A - SMA Negeri 1</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galaxia - 11A Official</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        * {
-            font-family: 'Outfit', sans-serif;
+        /* VARIABEL TEMA (LIGHT DEFAULT) */
+        :root {
+            --primary: #0f172a; 
+            --primary-fg: #ffffff;
+            --secondary: #3b82f6; 
+            --accent: #f59e0b; 
+            
+            --bg-body: #f1f5f9;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
+            --header-grad-1: #0f172a;
+            --header-grad-2: #1e3a8a;
+            --icon-bg-1: #eff6ff;
+            --icon-bg-2: #fffbeb;
+
+            --radius-xl: 24px;
+            --radius-lg: 16px;
         }
 
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* VARIABEL TEMA DARK */
+        [data-theme="dark"] {
+            --primary: #3b82f6; /* Biru lebih terang agar kontras */
+            --primary-fg: #ffffff;
+            --secondary: #60a5fa;
+            --accent: #fbbf24;
+
+            --bg-body: #020617; /* Hampir hitam */
+            --surface: #1e293b; /* Slate 800 */
+            --surface-2: #0f172a; /* Slate 900 */
+
+            --text-main: #f1f5f9; /* Putih terang */
+            --text-muted: #94a3b8; /* Abu terang */
+
+            --border: #334155;
+            --input-bg: #0f172a;
+
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
+            --header-grad-1: #020617;
+            --header-grad-2: #1e293b;
+            --icon-bg-1: #172554; /* Biru tua banget */
+            --icon-bg-2: #451a03; /* Coklat tua banget */
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-body); 
+            margin: 0; padding: 0; 
+            -webkit-tap-highlight-color: transparent; 
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        /* HEADER PROFESSIONAL */
+        .header { 
+            background: linear-gradient(135deg, var(--header-grad-1) 0%, var(--header-grad-2) 100%);
+            color: white; 
+            padding: 40px 25px 50px 25px; 
+            border-radius: 0 0 40px 40px; 
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+            display: flex; 
+            align-items: center; 
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+               
+        .header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5; pointer-events: none;
+        }
+        
+        .logo-sekolah { 
+            width: 75px; height: 75px; 
+            object-fit: contain; 
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)) drop-shadow(0 4px 12px rgba(0,0,0,0.3)); 
+            z-index: 2;
+            background: transparent;
+            border-radius: 50%;
+            padding: 2px;
+        }
+        
+        .header-text { z-index: 2; flex: 1; }
+        
+        .header-text h1 { 
+            margin: 0; 
+            font-family: 'Cinzel', serif; 
+            font-size: 26px; 
+            font-weight: 800;
+            letter-spacing: 2px; 
+            line-height: 1.2; 
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+        }
+        
+        .header-text .sub-title { 
+            font-size: 11px; font-weight: 600; letter-spacing: 2px;
+            color: var(--accent); text-transform: uppercase;
+            margin-top: 5px; margin-bottom: 8px;
+            display: inline-block; padding: 4px 10px;
+            background: rgba(255,255,255,0.05); border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .header-text .address { 
+            font-size: 11px; color: #94a3b8; font-weight: 400; margin: 0;
+        }
+        
+        /* TOMBOL TOGGLE THEME */
+        .theme-toggle-btn {
+            background: var(--surface); 
+            border: 1px solid var(--border);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); 
+            cursor: pointer; 
+            transition: 0.3s;
+            box-shadow: var(--shadow-card);
+        }
+        .theme-toggle-btn:active { transform: scale(0.9); background: var(--surface-2); }
+
+        /* CONTENT */
+        .content { padding: 0 20px 40px 20px; max-width: 500px; margin: -30px auto 0 auto; position: relative; z-index: 5; }
+        
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin: 30px 0 15px 0;
+        }
+        
+        .section-title { 
+            font-size: 16px; font-weight: 700; color: var(--text-main); 
+            display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px;
+            transition: color 0.3s;
+        }
+        
+        .section-title i { color: var(--secondary); }
+
+        /* BUTTONS */
+        .btn-refresh { 
+            background: var(--surface); color: var(--text-main); 
+            border: 1px solid var(--border);
+            padding: 8px 14px; border-radius: 20px; font-size: 11px; font-weight: 600;
+            display: flex; align-items: center; gap: 6px; cursor: pointer; 
+            transition: all 0.3s; box-shadow: var(--shadow-card);
+        }
+        .btn-refresh:active { transform: scale(0.95); }
+
+        /* INFO BOX */
+        #box-pengumuman { 
+            background: var(--surface); padding: 20px; border-radius: var(--radius-lg); 
+            font-size: 14px; color: var(--text-main); line-height: 1.6;
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow-soft); transition: background 0.3s;
+        }
+        .reload-info { font-size: 10px; color: var(--text-muted); margin: 8px 0 0 5px; text-align: right;}
+
+        /* MENU GRID */
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .menu-card { 
+            background: var(--surface); padding: 25px 15px; border-radius: var(--radius-xl); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            cursor: pointer; box-shadow: var(--shadow-soft); transition: 0.3s; 
+            border: 1px solid var(--border);
+        }
+        .menu-card:active { transform: scale(0.98); opacity: 0.8; }
+        
+        .icon-box {
+            width: 50px; height: 50px; background: var(--icon-bg-1); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+            color: var(--secondary); transition: 0.3s;
+        }
+        .menu-card:nth-child(2) .icon-box { background: var(--icon-bg-2); color: var(--accent); }
+        
+        .menu-card span { font-size: 14px; font-weight: 600; color: var(--text-main); }
+        
+        /* ALBUM */
+        .album-scroll { 
+            display: flex; overflow-x: auto; gap: 15px; padding: 5px 5px 20px 5px; 
+            scroll-snap-type: x mandatory; 
+        }
+        .album-scroll::-webkit-scrollbar { display: none; }
+        .album-item { 
+            flex: 0 0 85%; aspect-ratio: 16/9; scroll-snap-align: center; 
+            border-radius: var(--radius-lg); overflow: hidden; background: var(--surface-2); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: relative;
+        }
+        .album-item img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* ORGANIZATION LIST */
+        .org-box { 
+            background: var(--surface); border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-soft); overflow: hidden; transition: background 0.3s;
+        }
+        .org-item { 
+            display: flex; justify-content: space-between; padding: 16px 20px; 
+            border-bottom: 1px solid var(--border); font-size: 13px; align-items: center;
+        }
+        .org-item:last-child { border-bottom: none; }
+        .org-item span { color: var(--text-muted); font-weight: 500; }
+        .org-item strong { color: var(--text-main); font-weight: 700; }
+
+        /* CHAT SECTION */
+        .comment-wrapper {
+            background: var(--surface); border-radius: var(--radius-xl); 
+            box-shadow: var(--shadow-soft); overflow: hidden;
+            display: flex; flex-direction: column; transition: background 0.3s;
+        }
+        
+        #comment-list { 
+            max-height: 300px; overflow-y: auto; padding: 20px; 
+            background: var(--surface-2);
         }
 
-        .blob {
-            position: absolute;
-            filter: blur(40px);
-            opacity: 0.4;
-            animation: float 20s infinite;
+        .comment-bubble { 
+            background: var(--surface); padding: 12px 16px; border-radius: 0 16px 16px 16px; 
+            margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            display: flex; gap: 12px; width: 100%; position: relative;
+            border: 1px solid var(--border);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+        
+        .comment-bubble > div:last-child {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .comment-bubble span {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        
+
+
+        .comment-avatar-img {
+            width: 36px; height: 36px; border-radius: 50%; background: #ddd; flex-shrink: 0;
+            object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
+        .input-area {
+            padding: 15px; background: var(--surface); border-top: 1px solid var(--border);
+            display: flex; flex-direction: column; gap: 10px;
         }
 
-        .card-hover {
-            transition: all 0.3s ease;
+        .input-group { 
+            display: flex; gap: 10px; align-items: center; 
+            background: var(--input-bg); padding: 8px; border-radius: 14px;
+            border: 1px solid var(--border);
         }
+        
+        .avatar-mini {
+            width: 38px; height: 38px; border-radius: 10px; overflow: hidden; position: relative;
+            cursor: pointer; border: 2px solid var(--surface); box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .avatar-mini img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-mini .cam-icon {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; 
+            align-items: center; justify-content: center; color: white; opacity: 0;
+        }
+        .avatar-mini:active .cam-icon { opacity: 1; }
 
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        .input-clean {
+            border: none; background: transparent; flex: 1; font-size: 13px;
+            font-family: inherit; color: var(--text-main); padding: 5px;
         }
+        
+        .btn-send {
+            background: var(--text-main); color: var(--surface); border: none; 
+            padding: 0 20px; border-radius: 12px; font-weight: 600; font-size: 13px;
+            cursor: pointer; height: 40px; display: flex; align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
+        }
+        .btn-send:active { transform: scale(0.95); opacity: 0.9; }
 
-        .schedule-item {
-            transition: all 0.3s ease;
+        /* SOCIAL BUTTONS */
+        .social-container { display: flex; gap: 12px; margin-top: 5px; }
+        .social-btn { 
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; 
+            padding: 16px; border-radius: var(--radius-lg); text-decoration: none; 
+            color: white !important; font-size: 13px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.2s;
         }
+        .social-btn:active { transform: scale(0.96); }
+        .wa { background: #25d366; }
+        .ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 9999; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { 
+            background: var(--surface); width: 90%; max-width: 400px; padding: 0; 
+            border-radius: 20px; position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .modal-header {
+            background: var(--primary); padding: 20px; color: var(--primary-fg);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h3 { margin: 0; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .close-btn { color: white; cursor: pointer; opacity: 0.8; }
+        
+        .table-container { padding: 20px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        table th { text-align: left; padding: 10px; color: var(--text-muted); font-size: 11px; text-transform: uppercase; border-bottom: 2px solid var(--border); }
+        table td { padding: 12px 10px; font-size: 13px; border-bottom: 1px solid var(--border); color: var(--text-main); }
+        table tr:last-child td { border-bottom: none; }
+        
+        /* ALERT BOX */
+        .custom-alert-box {
+            background: var(--surface); padding: 30px; border-radius: 24px;
+            width: 85%; max-width: 320px; text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .alert-icon-circle { background: var(--surface-2); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; color: var(--text-main); }
+        
 
-        .schedule-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            transform: translateX(10px);
-        }
 
-        .student-card {
-            transition: all 0.3s ease;
-        }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 11px; opacity: 0.6; }
+        
+        .spin { animation: rotation 0.8s infinite linear; }
+        @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(359deg); } }
 
-        .student-card:hover {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-
-        .modal {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .countdown-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .floating-nav {
-            animation: slideDown 0.5s ease;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-
-        .gradient-bg {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Dark Mode Styles */
-        .dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
-        }
-
-        .dark .bg-gray-50 {
-            background-color: #2d3748;
-        }
-
-        .dark .bg-white {
-            background-color: #1a202c;
-            color: #e2e8f0;
-        }
-
-        .dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-
-        .dark .text-gray-600 {
-            color: #a0aec0;
-        }
-
-        .dark .text-gray-500 {
-            color: #718096;
-        }
-
-        .dark .text-gray-400 {
-            color: #4a5568;
-        }
-
-        .dark .border-gray-200 {
-            border-color: #4a5568;
-        }
-
-        .dark .glass {
-            background: rgba(26, 32, 44, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .dark .schedule-item {
-            background-color: #2d3748;
-        }
-
-        .dark .schedule-item:hover {
-            background: rgba(99, 102, 241, 0.2);
-        }
-
-        .dark nav {
-            background: rgba(26, 32, 44, 0.9);
-        }
-
-        .dark #mobileMenu {
-            background-color: #2d3748;
-            border-color: #4a5568;
-        }
-
-        /* Toggle Switch */
-        .theme-toggle {
-            position: relative;
-            width: 60px;
-            height: 30px;
-            background: #cbd5e0;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dark .theme-toggle {
-            background: #4a5568;
-        }
-
-        .theme-toggle-slider {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-
-        .dark .theme-toggle-slider {
-            left: 33px;
-            background: #667eea;
-        }
-
-        /* Custom Scrollbar untuk Comments List */
-        #commentsList::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        #commentsList::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 10px;
-        }
-
-        .dark #commentsList::-webkit-scrollbar-track {
-            background: #1a202c;
-        }
-
-        #commentsList::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-        }
-
-        #commentsList::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
-        }
-
-        /* Smooth scroll behavior */
-        #commentsList {
-            scroll-behavior: smooth;
-        }
     </style>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass floating-nav">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-lg">11</div>
-                <span class="text-xl font-bold gradient-text">Kelas 11 A</span>
-            </div>
-            <div class="hidden md:flex gap-8 font-medium">
-                <a href="#beranda" class="hover:text-indigo-600 transition">Beranda</a>
-                <a href="#jadwal" class="hover:text-indigo-600 transition">Jadwal</a>
-                <a href="#siswa" class="hover:text-indigo-600 transition">Siswa</a>
-                <a href="#galeri" class="hover:text-indigo-600 transition">Galeri</a>
-                <a href="#pengumuman" class="hover:text-indigo-600 transition">Pengumuman</a>
-                <a href="#komentar" class="hover:text-indigo-600 transition">Komentar</a>
-            </div>
-            <div class="flex items-center gap-4">
-                <!-- Theme Toggle Desktop -->
-                <div class="hidden md:block">
-                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-                        <div class="theme-toggle-slider">
-                            <span id="themeIconDesktop">☀️</span>
-                        </div>
-                    </div>
-                </div>
-                <button onclick="toggleMobileMenu()" class="md:hidden text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
-            <div class="flex flex-col p-4 gap-3">
-                <!-- Theme Toggle Mobile -->
-                <div class="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-600 mb-2">
-                    <span class="font-medium text-gray-700 dark:text-gray-300">
-                        <i class="fas fa-palette mr-2"></i> Mode Tema
-                    </span>
-                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-                        <div class="theme-toggle-slider">
-                            <span id="themeIconMobile">☀️</span>
-                        </div>
-                    </div>
-                </div>
-                <a href="#beranda" class="py-2 hover:text-indigo-600">Beranda</a>
-                <a href="#jadwal" class="py-2 hover:text-indigo-600">Jadwal</a>
-                <a href="#siswa" class="py-2 hover:text-indigo-600">Siswa</a>
-                <a href="#galeri" class="py-2 hover:text-indigo-600">Galeri</a>
-                <a href="#pengumuman" class="py-2 hover:text-indigo-600">Pengumuman</a>
-                <a href="#komentar" class="py-2 hover:text-indigo-600">Komentar</a>
-            </div>
-        </div>
-    </nav>
+<div class="header">
+    <img class="logo-sekolah" src="https://iili.io/fSKbmap.png" alt="Logo">
+    <div class="header-text">
+        <h1>APOSTROPHE</h1> 
+        <span class="sub-title">Class of 2026</span>
+        <p class="address">XI-A SMAN 1 WATES • Yogyakarta</p>
+    </div>
+</div>
 
-    <!-- Hero Section -->
-    <section id="beranda" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Animated Blobs -->
-        <div class="blob w-96 h-96 bg-purple-400 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="blob w-96 h-96 bg-blue-400 rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 animation-delay-2000"></div>
-        <div class="blob w-64 h-64 bg-pink-400 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animation-delay-4000"></div>
-
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="inline-block mb-4 px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 font-medium text-sm animate-pulse">
-                ✨ Tahun Ajaran 2024/2025
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Selamat Datang di <br>
-                <span class="gradient-text">Kelas 11 A</span>
-            </h1>
-            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Kelas yang penuh semangat, kreativitas, dan prestasi. Bersama kita tumbuh, bersama kita meraih mimpi.
-            </p>
-
-            <div class="flex gap-4 justify-center">
-                <a href="#jadwal" class="px-8 py-4 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl">
-                    Lihat Jadwal
-                </a>
-                <a href="#siswa" class="px-8 py-4 bg-white text-indigo-600 border-2 border-indigo-600 rounded-full font-semibold hover:bg-indigo-50 transition">
-                    Daftar Siswa
-                </a>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-2xl text-gray-400"></i>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 card-hover">
-                    <div class="text-4xl font-bold text-blue-600 mb-2">32</div>
-                    <div class="text-gray-600">Jumlah Siswa</div>
-                </div>
-                <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 card-hover">
-                    <div class="text-4xl font-bold text-purple-600 mb-2">12</div>
-                    <div class="text-gray-600">Mata Pelajaran</div>
-                </div>
-                <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-pink-100 card-hover">
-                    <div class="text-4xl font-bold text-pink-600 mb-2">5</div>
-                    <div class="text-gray-600">Prestasi Bulan Ini</div>
-                </div>
-                <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 card-hover">
-                    <div class="text-4xl font-bold text-green-600 mb-2">98%</div>
-                    <div class="text-gray-600">Kehadiran</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Schedule Section -->
-    <section id="jadwal" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Jadwal Pelajaran</h2>
-                <p class="text-gray-600">Jadwal mingguan kelas 11 A</p>
-            </div>
-
-            <div class="grid md:grid-cols-5 gap-4">
-                <!-- Senin -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mx-auto mb-2 font-bold">Sen</div>
-                        <h3 class="font-bold text-lg">Senin</h3>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-indigo-500">
-                            <div class="font-semibold text-sm">Matematika</div>
-                            <div class="text-xs text-gray-500">07:00 - 09:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-blue-500">
-                            <div class="font-semibold text-sm">Bahasa Inggris</div>
-                            <div class="text-xs text-gray-500">09:00 - 11:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-green-500">
-                            <div class="font-semibold text-sm">Fisika</div>
-                            <div class="text-xs text-gray-500">11:00 - 13:00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Selasa -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mx-auto mb-2 font-bold">Sel</div>
-                        <h3 class="font-bold text-lg">Selasa</h3>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-pink-500">
-                            <div class="font-semibold text-sm">Kimia</div>
-                            <div class="text-xs text-gray-500">07:00 - 09:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-purple-500">
-                            <div class="font-semibold text-sm">Biologi</div>
-                            <div class="text-xs text-gray-500">09:00 - 11:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-yellow-500">
-                            <div class="font-semibold text-sm">Sejarah</div>
-                            <div class="text-xs text-gray-500">11:00 - 13:00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rabu -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-2 font-bold">Rab</div>
-                        <h3 class="font-bold text-lg">Rabu</h3>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-green-500">
-                            <div class="font-semibold text-sm">Bahasa Indonesia</div>
-                            <div class="text-xs text-gray-500">07:00 - 09:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-red-500">
-                            <div class="font-semibold text-sm">PKN</div>
-                            <div class="text-xs text-gray-500">09:00 - 11:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-indigo-500">
-                            <div class="font-semibold text-sm">Seni Budaya</div>
-                            <div class="text-xs text-gray-500">11:00 - 13:00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kamis -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mx-auto mb-2 font-bold">Kam</div>
-                        <h3 class="font-bold text-lg">Kamis</h3>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-orange-500">
-                            <div class="font-semibold text-sm">Geografi</div>
-                            <div class="text-xs text-gray-500">07:00 - 09:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-teal-500">
-                            <div class="font-semibold text-sm">Ekonomi</div>
-                            <div class="text-xs text-gray-500">09:00 - 11:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-blue-500">
-                            <div class="font-semibold text-sm">Olahraga</div>
-                            <div class="text-xs text-gray-500">11:00 - 13:00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Jumat -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-2 font-bold">Jum</div>
-                        <h3 class="font-bold text-lg">Jumat</h3>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-blue-500">
-                            <div class="font-semibold text-sm">Agama</div>
-                            <div class="text-xs text-gray-500">07:00 - 09:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-purple-500">
-                            <div class="font-semibold text-sm">Prakarya</div>
-                            <div class="text-xs text-gray-500">09:00 - 11:00</div>
-                        </div>
-                        <div class="schedule-item p-3 rounded-lg bg-gray-50 border-l-4 border-pink-500">
-                            <div class="font-semibold text-sm">BK</div>
-                            <div class="text-xs text-gray-500">11:00 - 12:00</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Students Section -->
-    <section id="siswa" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Daftar Siswa</h2>
-                <p class="text-gray-600 mb-8">Kenali anggota kelas kami</p>
-
-                <!-- Search -->
-                <div class="max-w-md mx-auto relative">
-                    <input type="text" id="searchStudent" placeholder="Cari nama siswa..." 
-                           class="w-full px-6 py-3 rounded-full border-2 border-gray-200 focus:border-indigo-500 focus:outline-none transition"
-                           onkeyup="searchStudents()">
-                    <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="studentGrid">
-                <!-- Students will be generated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="galeri" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Galeri Kelas</h2>
-                <p class="text-gray-600">Momen berharga bersama kelas 11 A</p>
-            </div>
-
-            <div id="galeriGrid" class="grid md:grid-cols-3 gap-6">
-                <!-- Loaded from GitHub Gist -->
-                <div class="col-span-3 text-center py-16">
-                    <i class="fas fa-spinner fa-spin text-4xl text-indigo-400 mb-4"></i>
-                    <p class="text-gray-500">Memuat galeri...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Announcements Section -->
-    <section id="pengumuman" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Pengumuman</h2>
-                <p class="text-gray-600">Informasi terbaru untuk siswa kelas 11 A</p>
-            </div>
-
-            <div id="pengumumanList" class="max-w-4xl mx-auto space-y-6">
-                <!-- Loaded from GitHub Gist -->
-                <div class="text-center py-16">
-                    <i class="fas fa-spinner fa-spin text-4xl text-indigo-400 mb-4"></i>
-                    <p class="text-gray-500">Memuat pengumuman...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comments Section -->
-    <section id="komentar" class="py-20 bg-gray-50 dark:bg-gray-900">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Komentar & Diskusi</h2>
-                <p class="text-gray-600 dark:text-gray-400">Berbagi pemikiran dan diskusi bersama teman sekelas</p>
-            </div>
-
-            <div class="max-w-7xl mx-auto">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Left Column - Add Comment Form -->
-                    <div class="space-y-6">
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg sticky top-24">
-                            <h3 class="text-xl font-bold mb-4 flex items-center">
-                                <i class="fas fa-pen-fancy mr-3 text-indigo-600"></i>
-                                Tulis Komentar
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Nama Anda</label>
-                                    <input type="text" id="commentName" placeholder="Masukkan nama Anda" 
-                                           class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:outline-none transition">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Komentar</label>
-                                    <textarea id="commentText" rows="6" placeholder="Tulis komentar Anda di sini..." 
-                                              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:outline-none transition resize-none"></textarea>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                        <i class="fas fa-keyboard mr-1"></i> Tekan Ctrl+Enter untuk kirim cepat
-                                    </p>
-                                </div>
-                                <div class="flex gap-3">
-                                    <button onclick="addComment()" 
-                                            class="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
-                                        <i class="fas fa-paper-plane mr-2"></i> Kirim Komentar
-                                    </button>
-                                    <button onclick="clearForm()" 
-                                            class="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column - Comments List with Fixed Height -->
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-700 dark:to-gray-800">
-                            <h3 class="text-xl font-bold flex items-center justify-between">
-                                <span>
-                                    <i class="fas fa-comments mr-3 text-indigo-600"></i>
-                                    Semua Komentar
-                                </span>
-                                <span class="text-sm font-normal bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full" id="commentCount">0 komentar</span>
-                            </h3>
-                        </div>
-
-                        <!-- Scrollable Comments Container -->
-                        <div class="overflow-y-auto p-6 space-y-4" style="max-height: 600px; min-height: 400px;" id="commentsList">
-                            <div class="text-center py-12 text-gray-400">
-                                <i class="fas fa-comments text-4xl mb-3"></i>
-                                <p>Memuat komentar...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center font-bold">11</div>
-                        <span class="text-xl font-bold">Kelas 11 A</span>
-                    </div>
-                    <p class="text-gray-400">SMA Negeri 1<br>Jl. Pendidikan No. 123<br>Jakarta, Indonesia</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Tautan Cepat</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#beranda" class="hover:text-white transition">Beranda</a></li>
-                        <li><a href="#jadwal" class="hover:text-white transition">Jadwal</a></li>
-                        <li><a href="#siswa" class="hover:text-white transition">Siswa</a></li>
-                        <li><a href="#galeri" class="hover:text-white transition">Galeri</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Kontak</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-envelope mr-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd9698919c8ecccc9cbd8e909c938e9c8988d38e9e95d39499">[email&#160;protected]</a></li>
-                        <li><i class="fas fa-phone mr-2"></i> +62 812-3456-7890</li>
-                        <li><i class="fas fa-instagram mr-2"></i> @kelas11a_official</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Dukung Kami</h4>
-                    <p class="text-gray-400 mb-4 text-sm">Bantu kami mengembangkan website kelas dengan donasi</p>
-                    <a href="https://www.buymeacoffee.com/kelas11a" target="_blank" 
-                       class="inline-flex items-center gap-2 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-coffee text-lg"></i>
-                        <span>Buy Me a Coffee</span>
-                    </a>
-                    <p class="text-xs text-gray-500 mt-3">Terima kasih atas dukungannya! ❤️</p>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Kelas 11 A. All rights reserved. Dibuat dengan ❤️ oleh siswa kelas 11 A.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Custom Alert Modal -->
-    <div id="alertModal" class="modal fixed inset-0 z-[60] bg-black/50 items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center transform transition-all" onclick="event.stopPropagation()">
-            <div id="alertModalIcon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"></div>
-            <h3 id="alertModalTitle" class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2"></h3>
-            <p id="alertModalMessage" class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6"></p>
-            <button onclick="closeAlertModal()" class="px-8 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full transition">
-                OK
+<div class="content">
+    
+    <div class="section-header">
+        <div class="section-title"><i data-lucide="bell-ring" style="width:18px"></i> Info Terkini</div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="btn-refresh" onclick="muatData()">
+                <i data-lucide="refresh-cw" id="icon-refresh" style="width: 12px;"></i> Update
+            </button>
+            <button class="theme-toggle-btn" id="btn-theme" title="Ganti Tema">
+                <i data-lucide="moon" id="icon-theme" style="width: 16px; height: 16px;"></i>
             </button>
         </div>
     </div>
-
-    <!-- Image Modal -->
-    <div id="imageModal" class="modal fixed inset-0 z-50 bg-black/90 items-center justify-center p-4" onclick="closeModal()">
-        <button class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-        </button>
-        <img id="modalImage" src="" alt="Full size" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl">
+    <div id="box-pengumuman">
+        <div style="display:flex; gap:10px; align-items:center; color: var(--text-muted);">
+            <i data-lucide="loader-2" class="spin"></i> Sinkronisasi data...
+        </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Data Siswa
-        const students = [
-            "Ahmad Rizky", "Budi Santoso", "Citra Lestari", "Dewi Anggraini",
-            "Eko Prasetyo", "Fani Amelia", "Gilang Ramadhan", "Hani Susanti",
-            "Indra Wijaya", "Joko Santoso", "Kartika Sari", "Lina Marlina",
-            "Maman Supratman", "Nina Aulia", "Oscar Putra", "Putri Wulandari",
-            "Qori Azzahra", "Rudi Hartono", "Sari Indah", "Tono Sudirman",
-            "Umi Kalsum", "Vina Panduwinata", "Wawan Setiawan", "Xena Gabriela",
-            "Yani Susanti", "Zainal Abidin", "Adi Nugroho", "Bella Safitri",
-            "Caca Handika", "Dodi Sudrajat", "Elly Sugigi", "Fajar Sidik"
-        ];
+    <div class="section-header">
+        <div class="section-title"><i data-lucide="layout-grid" style="width:18px"></i> Akses Cepat</div>
+    </div>
+    <div class="grid-menu">
+        <div class="menu-card" onclick="openModal('modalJadwal')">
+            <div class="icon-box"><i data-lucide="calendar-days"></i></div>
+            <span>Jadwal Mapel</span>
+        </div>
+        <div class="menu-card" onclick="openModal('modalPiket')">
+            <div class="icon-box"><i data-lucide="sparkles"></i></div>
+            <span>Jadwal Piket</span>
+        </div>
+    </div>
 
-        // Generate Student Cards
-        function generateStudents() {
-            const grid = document.getElementById('studentGrid');
-            grid.innerHTML = students.map((name, index) => `
-                <div class="student-card bg-white rounded-2xl p-4 shadow-lg text-center cursor-pointer" onclick="showStudentDetail('${name}')">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 mx-auto mb-3 flex items-center justify-center text-white text-2xl font-bold">
-                        ${name.charAt(0)}
-                    </div>
-                    <h4 class="font-semibold text-sm">${name}</h4>
-                    <p class="text-xs text-gray-500">No. Absen ${index + 1}</p>
+    <div class="section-header">
+        <div class="section-title"><i data-lucide="image" style="width:18px"></i> Galeri Kelas</div>
+    </div>
+    <div class="album-scroll" id="container-album">
+        <div class="album-item" style="background: var(--surface-2); display:flex; align-items:center; justify-content:center; color: var(--text-muted); font-size:12px;">
+            Memuat Galeri...
+        </div>
+    </div>
+
+    <div class="section-header">
+        <div class="section-title"><i data-lucide="users-2" style="width:18px"></i> Core Team</div>
+    </div>
+    <div class="org-box">
+        <div class="org-item"><span>Wali Kelas</span><strong>Bu Muktinem, S.Pd.</strong></div>
+        <div class="org-item"><span>Ketua Kelas</span><strong>Irfan Hakim M.W</strong></div>
+        <div class="org-item"><span>Wakil Ketua</span><strong>Wisnu Faqih A.</strong></div>
+        <div class="org-item"><span>Bendahara</span><strong>Annisa & Khinanti</strong></div>
+        <div class="org-item"><span>Sekretaris</span><strong>Atikah & Hayu</strong></div>
+    </div>
+
+    <div class="section-header">
+        <div class="section-title"><i data-lucide="message-circle" style="width:18px"></i> Public Chat</div>
+    </div>
+    <div class="comment-wrapper">
+        <div id="comment-list">
+            <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-top: 20px;">Menghubungkan ke server...</p>
+        </div>
+        
+        <div class="input-area">
+            <div class="input-group">
+                <div class="avatar-mini" onclick="triggerUpload()">
+                    <img id="current-avatar-display" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg">
+                    <div class="cam-icon"><i data-lucide="camera" style="width:14px"></i></div>
                 </div>
-            `).join('');
+                <input type="file" id="file-upload" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                
+                <input type="text" id="comment-name" class="input-clean" maxlength="15" placeholder="Username Anda...">
+                <button id="btn-edit-name" onclick="editNameAction()" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">
+                    <i data-lucide="edit-3" style="width:16px"></i>
+                </button>
+            </div>
+            <small id="notif-username" style="font-size: 10px; color: #ef4444; display: none; padding-left: 5px;"></small>
+
+             <div style="display: flex; gap: 10px;">
+                <input type="text" id="comment-text" class="input-clean" style="background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; padding: 0 15px;" placeholder="Tulis pesan..." autocomplete="off">
+                <button id="btn-kirim" class="btn-send"><i data-lucide="send-horizontal" style="width:18px"></i></button>
+             </div>
+        </div>
+    </div>
+    
+    <div class="section-header">
+        <div class="section-title"><i data-lucide="share-2" style="width:18px"></i> Social Media</div>
+    </div>
+    <div class="social-container">
+        <a href="https://whatsapp.com/channel/0029VbBB7fG0QeadTEEK2h2G" class="social-btn wa">
+            <i data-lucide="message-circle" style="width:18px"></i> WhatsApp
+        </a>
+        <a href="https://www.instagram.com/apostrophe.212?igsh=bzc5cjk4cGZ1M2dw" class="social-btn ig">
+            <i data-lucide="instagram" style="width:18px"></i> Instagram
+        </a>
+    </div>
+</div>
+
+<div id="modalJadwal" class="modal" onclick="closeModal('modalJadwal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3><i data-lucide="calendar"></i> Jadwal Pelajaran</h3>
+            <i data-lucide="x" class="close-btn" onclick="closeModal('modalJadwal')"></i>
+        </div>
+        <div class="table-container">
+            <table>
+                <tr><th>Hari</th><th>Mata Pelajaran</th></tr>
+                <tr><td>Senin</td><td>PPKn, Fisika, Kimia, Mat TL</td></tr>
+                <tr><td>Selasa</td><td>Mat TL, Infor, Kimia, Bindo, BK</td></tr>
+                <tr><td>Rabu</td><td>Binggris, Bindo, Fisika, Infor</td></tr>
+                <tr><td>Kamis</td><td>Agama, Musik, Matwa, Bjawa</td></tr>
+                <tr><td>Jumat</td><td>PJOK, Sejarah, Matwa</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modalPiket" class="modal" onclick="closeModal('modalPiket')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header" style="background: var(--accent);">
+            <h3><i data-lucide="trash-2"></i> Jadwal Piket</h3>
+            <i data-lucide="x" class="close-btn" onclick="closeModal('modalPiket')"></i>
+        </div>
+        <div class="table-container">
+            <table>
+                <tr><th>Hari</th><th>Petugas</th></tr>
+                <tr><td>Senin</td><td>Syifaur, Natasya, Sarah, Bima, Abdi, Candra, Ivni, Vera</td></tr>
+                <tr><td>Selasa</td><td>Reynaldi, Bayu, Nisa, Qory, Hera, Khinan, Laily</td></tr>
+                <tr><td>Rabu</td><td>Berlian, Ara, Dika, Khasan, Daffa, Nabila, Nundif</td></tr>
+                <tr><td>Kamis</td><td>Fadhil, Cian, Wisnu, Malsi, Nayla, Hakim, Aji</td></tr>
+                <tr><td>Jumat</td><td>Atikah, Esti, Andhika, Naela, Affan, Satria, Rifat</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modalFoto" class="modal" onclick="closeModal('modalFoto')">
+    <div class="modal-content" onclick="event.stopPropagation()" style="background: transparent; box-shadow: none;">
+        <span class="close-btn" onclick="closeModal('modalFoto')" style="position: absolute; top: -40px; right: 0; font-size: 30px;">&times;</span>
+        <img id="img-zoom" style="width:100%; border-radius:15px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" src="">
+    </div>
+</div>
+
+<div id="customAlert" class="custom-alert-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(5px);">
+    <div class="custom-alert-box">
+        <div class="alert-icon-circle">
+            <i data-lucide="info" id="alertIcon"></i>
+        </div>
+        <h3 id="alertTitle" style="margin:0 0 8px; color:var(--text-main);">Pemberitahuan</h3>
+        <p id="alertMessage" style="color:var(--text-muted); font-size:13px; margin:0; line-height:1.5;"></p>
+        <button onclick="closeCustomAlert()" style="background:var(--text-main); color:var(--surface); border:none; width:100%; padding:14px; border-radius:14px; margin-top:20px; font-weight:600; cursor:pointer;">Mengerti</button>
+    </div>
+</div>
+
+<footer>&copy; 2026 11A Casello Official <br> Designed with Passion.</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBwVD34UH8dDs6HI8nKkMQThtxIQjPzbKM",
+        authDomain: "chat-80360.firebaseapp.com",
+        databaseURL: "https://chat-80360-default-rtdb.asia-southeast1.firebasedatabase.app", 
+        projectId: "chat-80360",
+        storageBucket: "chat-80360.firebasestorage.app",
+        messagingSenderId: "334898398273",
+        appId: "1:334898398273:web:d6633fc99657c1ebc632c0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const commentsRef = ref(db, 'komentar');
+
+    const btnKirim = document.getElementById('btn-kirim');
+    const inputNama = document.getElementById('comment-name');
+    const inputPesan = document.getElementById('comment-text');
+    const list = document.getElementById('comment-list');
+    const notifUsername = document.getElementById('notif-username');
+    const avatarDisplay = document.getElementById('current-avatar-display');
+
+    // KONFIGURASI
+    const KEY_NAME = 'user_galaxia_name';
+    const KEY_TIME = 'user_galaxia_time';
+    const KEY_AVATAR = 'user_galaxia_avatar_custom'; 
+    const MINUTES_LIMIT = 15; // Setel ke 15 Menit
+    let currentAvatar = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
+    function initUser() {
+        const savedName = localStorage.getItem(KEY_NAME);
+        const savedAvatar = localStorage.getItem(KEY_AVATAR);
+        
+        if (savedAvatar) {
+            currentAvatar = savedAvatar;
+            avatarDisplay.src = currentAvatar;
         }
+        if (savedName) {
+            inputNama.value = savedName;
+            inputNama.disabled = true;
+        }
+    }
+    initUser();
 
-        // Search Students
-        function searchStudents() {
-            const input = document.getElementById('searchStudent').value.toLowerCase();
-            const cards = document.querySelectorAll('.student-card');
+    window.triggerUpload = function() { document.getElementById('file-upload').click(); };
 
-            cards.forEach(card => {
-                const name = card.querySelector('h4').textContent.toLowerCase();
-                if (name.includes(input)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
+    window.handleFileUpload = function(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                window.showGalaxiaAlert("Foto terlalu besar (Max 5MB)", "Gagal", true);
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxWidth = 150; 
+                    const scaleFactor = maxWidth / img.width;
+                    canvas.width = maxWidth;
+                    canvas.height = img.height * scaleFactor;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    currentAvatar = compressedDataUrl;
+                    avatarDisplay.src = currentAvatar;
+                    localStorage.setItem(KEY_AVATAR, currentAvatar);
                 }
-            });
+            }
         }
+    };
 
-        // Show Student Detail (Simple Alert for demo)
-        function showStudentDetail(name) {
-            showAlert('info', 'Detail Siswa', `Nama: ${name}\nKelas: 11 A\nStatus: Aktif`);
+    window.editNameAction = function() {
+        const lastChanged = localStorage.getItem(KEY_TIME);
+        const now = Date.now();
+        // Ubah logika hari menjadi menit
+        const limitMs = MINUTES_LIMIT * 60 * 1000; 
+
+        if (!lastChanged || (now - lastChanged > limitMs)) {
+            inputNama.disabled = false;
+            inputNama.focus();
+            notifUsername.style.display = 'none';
+        } else {
+            const diff = now - lastChanged;
+            const sisaMenit = Math.ceil((limitMs - diff) / 60000); // 60000 ms = 1 menit
+            notifUsername.innerText = `Terkunci (${sisaMenit} menit lagi)`;
+            notifUsername.style.display = 'block';
         }
+    }
 
-        // Modal Functions
-        function openModal(src) {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('imageModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+    const cekValidasiUsername = (username) => {
+        if (username.length < 3 || username.length > 20) return "Nama minimal 3 huruf.";
+        const regexKarakter = /^[a-zA-Z0-9.\s]+$/; 
+        if (!regexKarakter.test(username)) return "Hindari simbol aneh.";
+        return null; 
+    };
+
+    btnKirim.addEventListener('click', () => {
+        let rawName = inputNama.value.trim();
+        const text = inputPesan.value.trim();
+
+        if(!rawName) { window.showGalaxiaAlert("Nama wajib diisi!", "Perhatian", true); return; }
+        if(!text) { window.showGalaxiaAlert("Pesan tidak boleh kosong.", "Info", true); return; }
+
+        const errorMsg = cekValidasiUsername(rawName);
+        if (errorMsg) { window.showGalaxiaAlert(errorMsg, "Format Salah", true); return; }
+        
+        btnKirim.disabled = true;
+        
+        if (!inputNama.disabled) {
+            localStorage.setItem(KEY_NAME, rawName);
+            localStorage.setItem(KEY_TIME, Date.now());
+            inputNama.disabled = true;
+            notifUsername.style.display = 'none';
         }
-
-        function closeModal() {
-            document.getElementById('imageModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Custom Alert Modal
-        function showAlert(type, title, message) {
-            const icons = {
-                success: { bg: 'bg-green-100', color: 'text-green-500', icon: '✓' },
-                error:   { bg: 'bg-red-100',   color: 'text-red-500',   icon: '✕' },
-                warning: { bg: 'bg-yellow-100', color: 'text-yellow-500', icon: '!' },
-                info:    { bg: 'bg-indigo-100', color: 'text-indigo-500', icon: 'i' },
-            };
-            const t = icons[type] || icons.info;
-            const iconEl = document.getElementById('alertModalIcon');
-            iconEl.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold ' + t.bg + ' ' + t.color;
-            iconEl.textContent = t.icon;
-            document.getElementById('alertModalTitle').textContent = title;
-            document.getElementById('alertModalMessage').textContent = message;
-            document.getElementById('alertModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeAlertModal() {
-            document.getElementById('alertModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Close mobile menu if open
-                    document.getElementById('mobileMenu').classList.add('hidden');
-                }
-            });
+        
+        push(commentsRef, { 
+            nama: rawName, pesan: text, avatar: currentAvatar, waktu: serverTimestamp() 
+        }).then(() => {
+            inputPesan.value = "";
+            btnKirim.disabled = false;
+        }).catch((err) => {
+            btnKirim.disabled = false;
         });
-
-        // Initialize
-        generateStudents();
-
-        // Scroll Animation
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg');
-            } else {
-                nav.classList.remove('shadow-lg');
-            }
-        });
-
-        // Theme Toggle Function
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            if (newTheme === 'dark') {
-                html.classList.add('dark');
-                updateThemeIcons('🌙');
-            } else {
-                html.classList.remove('dark');
-                updateThemeIcons('☀️');
-            }
-
-            // Save preference to localStorage
-            localStorage.setItem('theme', newTheme);
-        }
-
-        function updateThemeIcons(icon) {
-            const iconDesktop = document.getElementById('themeIconDesktop');
-            const iconMobile = document.getElementById('themeIconMobile');
-            if (iconDesktop) iconDesktop.textContent = icon;
-            if (iconMobile) iconMobile.textContent = icon;
-        }
-
-        // Load saved theme on page load
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const html = document.documentElement;
-
-            if (savedTheme === 'dark') {
-                html.classList.add('dark');
-                updateThemeIcons('🌙');
-            } else {
-                html.classList.remove('dark');
-                updateThemeIcons('☀️');
-            }
-        }
-
-        // Initialize theme on page load
-        loadTheme();
-
-
-        // =============================================
-        // GITHUB GIST CONFIGURATION
-        // Ganti GIST_ID dengan ID gist milik Anda
-        // Format gist: lihat file galeri.json & pengumuman.json
-        // =============================================
-        const GIST_GALERI_URL      = 'https://gist.githubusercontent.com/rnld-i/92b7c66aba63760c4eb01b202eaa5b20/raw/galeri.json';
-        const GIST_PENGUMUMAN_URL  = 'https://gist.githubusercontent.com/rnld-i/92b7c66aba63760c4eb01b202eaa5b20/raw/pengumuman.json';
-
-        // Tag & border color map untuk pengumuman
-        const BADGE_MAP = {
-            'penting':  { badge: 'bg-red-100 text-red-600',     border: 'border-indigo-500', bg: 'from-indigo-50 to-purple-50' },
-            'kegiatan': { badge: 'bg-blue-100 text-blue-600',    border: 'border-blue-500',   bg: 'from-blue-50 to-cyan-50' },
-            'prestasi': { badge: 'bg-green-100 text-green-600',  border: 'border-green-500',  bg: 'from-green-50 to-emerald-50' },
-            'info':     { badge: 'bg-yellow-100 text-yellow-600',border: 'border-yellow-500', bg: 'from-yellow-50 to-orange-50' },
-        };
-
-        // Load Galeri dari Gist
-        async function loadGaleri() {
-            const grid = document.getElementById('galeriGrid');
-            try {
-                const res = await fetch(GIST_GALERI_URL + '?t=' + Date.now());
-                if (!res.ok) throw new Error('Gagal memuat galeri');
-                const fotos = await res.json();
-
-                if (!fotos.length) {
-                    grid.innerHTML = '<div class="col-span-3 text-center py-16 text-gray-400">Belum ada foto.</div>';
-                    return;
+    });
+    
+    onValue(commentsRef, (snapshot) => {
+        list.innerHTML = "";
+        if (snapshot.exists()) {
+            snapshot.forEach((child) => {
+                const data = child.val();
+                let waktuTampil = "";
+                if (data.waktu) {
+                    const date = new Date(data.waktu);
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                    const year = date.getFullYear().toString().slice(-2);
+                    waktuTampil = `${day}/${month}/${year}`;
                 }
+                const userAvatar = data.avatar || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
-                grid.innerHTML = fotos.map(foto => `
-                    <div class="group relative overflow-hidden rounded-2xl cursor-pointer" onclick="openModal('${foto.url_full}')">
-                        <img src="${foto.url_thumb}" alt="${foto.caption}" 
-                             class="w-full h-64 object-cover transition duration-500 group-hover:scale-110"
-                             onerror="this.src='https://placehold.co/600x400/e0e7ff/6366f1?text=Foto'">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
-                            <p class="text-white font-semibold">${foto.caption}</p>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error(err);
-                grid.innerHTML = `
-                    <div class="col-span-3 bg-yellow-50 border-l-4 border-yellow-400 rounded-xl p-6">
-                        <p class="font-bold text-yellow-800 mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Gagal memuat galeri</p>
-                        <p class="text-yellow-700 text-sm">Pastikan URL Gist sudah benar di variabel <code>GIST_GALERI_URL</code>.</p>
-                    </div>`;
-            }
-        }
-
-        // Load Pengumuman dari Gist
-        async function loadPengumuman() {
-            const list = document.getElementById('pengumumanList');
-            try {
-                const res = await fetch(GIST_PENGUMUMAN_URL + '?t=' + Date.now());
-                if (!res.ok) throw new Error('Gagal memuat pengumuman');
-                const items = await res.json();
-
-                if (!items.length) {
-                    list.innerHTML = '<div class="text-center py-16 text-gray-400">Belum ada pengumuman.</div>';
-                    return;
-                }
-
-                list.innerHTML = items.map(item => {
-                    const tag = (item.tag || 'info').toLowerCase();
-                    const style = BADGE_MAP[tag] || BADGE_MAP['info'];
-                    return `
-                        <div class="bg-gradient-to-r ${style.bg} rounded-2xl p-6 border-l-4 ${style.border} card-hover">
-                            <div class="flex items-start justify-between mb-2">
-                                <span class="px-3 py-1 ${style.badge} rounded-full text-xs font-semibold capitalize">${item.tag}</span>
-                                <span class="text-sm text-gray-500">${item.tanggal}</span>
+                const div = document.createElement('div');
+                div.className = "comment-bubble";
+                div.innerHTML = `
+                    <img src="${userAvatar}" class="comment-avatar-img" alt="pic">
+                    <div style="flex:1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <div style="display:flex; align-items:center;">
+                                <strong style="font-size:12px; color:var(--text-main);">${data.nama}</strong>
                             </div>
-                            <h3 class="text-xl font-bold mb-2">${item.judul}</h3>
-                            <p class="text-gray-600">${item.isi}</p>
-                        </div>`;
-                }).join('');
-            } catch (err) {
-                console.error(err);
-                list.innerHTML = `
-                    <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-xl p-6">
-                        <p class="font-bold text-yellow-800 mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Gagal memuat pengumuman</p>
-                        <p class="text-yellow-700 text-sm">Pastikan URL Gist sudah benar di variabel <code>GIST_PENGUMUMAN_URL</code>.</p>
-                    </div>`;
-            }
+                            <small style="font-size:10px; color:var(--text-muted);">${waktuTampil}</small>
+                        </div>
+                        <span style="font-size:13px; color:var(--text-main); display: block; line-height: 1.4;">${data.pesan}</span>
+                    </div>
+                `;
+                list.prepend(div); 
+            });
+            lucide.createIcons();
+        } else {
+            list.innerHTML = "<p style='text-align:center; color:var(--text-muted); font-size:13px; margin-top:20px'>Belum ada percakapan. Mulailah!</p>";
         }
+    });
+</script>
 
-        // Panggil saat halaman siap
-        loadGaleri();
-        loadPengumuman();
+<script>
+    lucide.createIcons();
+    function openModal(id) { document.getElementById(id).style.display = "flex"; }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    function zoomFoto(url) { document.getElementById('img-zoom').src = url; openModal('modalFoto'); }
 
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBIkWchf6ch3mmvLm6jBFkYk4US_7uOh",
-            authDomain: "komentar-kelas.firebaseapp.com",
-            databaseURL: "https://komentar-kelas-default-rtdb.asia-southeast1.firebasedatabase.app", 
-            projectId: "komentar-kelas",
-            storageBucket: "komentar-kelas.firebasestorage.app",
-            messagingSenderId: "405248132927",
-            appId: "1:405248132927:web:c374bc9d0f78841edf758a"
-        };
+    // --- DARK MODE LOGIC ---
+    const btnTheme = document.getElementById('btn-theme');
+    const iconTheme = document.getElementById('icon-theme');
+    const htmlEl = document.documentElement;
 
-        // Initialize Firebase
-        let database;
+    const savedTheme = localStorage.getItem('theme_galaxia') || 'light';
+    setTheme(savedTheme);
+
+    btnTheme.addEventListener('click', () => {
+        const current = htmlEl.getAttribute('data-theme');
+        const newTheme = current === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+    });
+
+    function setTheme(themeName) {
+        htmlEl.setAttribute('data-theme', themeName);
+        localStorage.setItem('theme_galaxia', themeName);
+        
+        if(themeName === 'dark') {
+            iconTheme.setAttribute('data-lucide', 'sun');
+        } else {
+            iconTheme.setAttribute('data-lucide', 'moon');
+        }
+        lucide.createIcons();
+    }
+
+    async function muatData() {
+        const refreshIcon = document.getElementById('icon-refresh');
+        const box = document.getElementById('box-pengumuman');
+        const container = document.getElementById('container-album');
+        refreshIcon.classList.add('spin');
+        
+        const linkGist = "https://gist.githubusercontent.com/rnld-i/ba0bd11035ab2d07089962bad2d39503/raw/gistfile1.txt";
         try {
-            firebase.initializeApp(firebaseConfig);
-            database = firebase.database();
-            console.log('Firebase initialized successfully');
-            loadComments();
-        } catch (error) {
-            console.error('Firebase initialization error:', error);
-            document.getElementById('commentsList').innerHTML = `
-                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg">
-                    <div class="flex items-start">
-                        <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl mr-3"></i>
-                        <div>
-                            <h4 class="font-bold text-yellow-800 mb-2">Konfigurasi Firebase Diperlukan</h4>
-                            <p class="text-yellow-700 mb-3">Untuk mengaktifkan fitur komentar, silakan:</p>
-                            <ol class="list-decimal list-inside text-yellow-700 space-y-1 text-sm">
-                                <li>Buat project di <a href="https://console.firebase.google.com" target="_blank" class="underline font-semibold">Firebase Console</a></li>
-                                <li>Aktifkan Realtime Database</li>
-                                <li>Salin konfigurasi Firebase Anda</li>
-                                <li>Ganti variabel <code class="bg-yellow-100 px-2 py-1 rounded">firebaseConfig</code> di kode dengan konfigurasi Anda</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Add Comment Function
-        function addComment() {
-            const name = document.getElementById('commentName').value.trim();
-            const text = document.getElementById('commentText').value.trim();
-
-            if (!name || !text) {
-                showAlert('warning', 'Form Tidak Lengkap', 'Mohon isi nama dan komentar Anda!');
-                return;
-            }
-
-            if (!database) {
-                showAlert('error', 'Konfigurasi Error', 'Firebase belum dikonfigurasi. Silakan hubungi administrator.');
-                return;
-            }
-
-            const comment = {
-                name: name,
-                text: text,
-                timestamp: firebase.database.ServerValue.TIMESTAMP,
-                date: new Date().toISOString()
-            };
-
-            // Add to Firebase
-            database.ref('comments').push(comment)
-                .then(() => {
-                    clearForm();
-                    // Scroll to top of comments list to see new comment
-                    document.getElementById('commentsList').scrollTop = 0;
-
-                    // Show success message
-                    const successMsg = document.createElement('div');
-                    successMsg.className = 'fixed top-24 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse';
-                    successMsg.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Komentar berhasil ditambahkan!';
-                    document.body.appendChild(successMsg);
-                    setTimeout(() => successMsg.remove(), 3000);
-                })
-                .catch((error) => {
-                    console.error('Error adding comment:', error);
-                    showAlert('error', 'Gagal Mengirim', 'Gagal menambahkan komentar. Silakan coba lagi.');
-                });
-        }
-
-        // Clear Form Function
-        function clearForm() {
-            document.getElementById('commentName').value = '';
-            document.getElementById('commentText').value = '';
-        }
-
-        // Load Comments Function
-        function loadComments() {
-            if (!database) return;
-
-            const commentsRef = database.ref('comments');
-
-            commentsRef.on('value', (snapshot) => {
-                const commentsList = document.getElementById('commentsList');
-                const comments = [];
-
-                snapshot.forEach((childSnapshot) => {
-                    comments.push({
-                        id: childSnapshot.key,
-                        ...childSnapshot.val()
-                    });
-                });
-
-                // Sort by timestamp (newest first)
-                comments.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-
-                // Update comment count in header
-                document.getElementById('commentCount').textContent = `${comments.length} komentar`;
-
-                if (comments.length === 0) {
-                    commentsList.innerHTML = `
-                        <div class="text-center py-16">
-                            <i class="fas fa-comments text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
-                            <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">Belum ada komentar</p>
-                            <p class="text-gray-400 dark:text-gray-500 text-sm mt-2">Jadilah yang pertama berkomentar!</p>
-                        </div>
-                    `;
-                } else {
-                    commentsList.innerHTML = comments.map((comment, index) => {
-                        const date = comment.date ? new Date(comment.date) : new Date();
-                        const formattedDate = date.toLocaleDateString('id-ID', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        });
-
-                        const timeAgo = getTimeAgo(date);
-                        const initial = comment.name.charAt(0).toUpperCase();
-                        const colors = [
-                            'from-blue-400 to-blue-600',
-                            'from-purple-400 to-purple-600',
-                            'from-pink-400 to-pink-600',
-                            'from-green-400 to-green-600',
-                            'from-orange-400 to-orange-600',
-                            'from-teal-400 to-teal-600',
-                            'from-red-400 to-red-600',
-                            'from-yellow-400 to-yellow-600'
-                        ];
-                        const colorIndex = comment.name.charCodeAt(0) % colors.length;
-                        const gradientColor = colors[colorIndex];
-
-                        return `
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-600 group">
-                                <div class="flex items-start gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br ${gradientColor} flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-lg">
-                                        ${initial}
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <div class="flex items-start justify-between mb-2">
-                                            <div>
-                                                <h4 class="font-bold text-gray-800 dark:text-gray-100">${escapeHtml(comment.name)}</h4>
-                                                <p class="text-xs text-gray-500 dark:text-gray-400">${timeAgo}</p>
-                                            </div>
-
-                                        </div>
-                                        <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed break-words">${escapeHtml(comment.text)}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                }
-            });
-        }
-
-        // Get time ago text
-        function getTimeAgo(date) {
-            const now = new Date();
-            const seconds = Math.floor((now - date) / 1000);
-
-            if (seconds < 60) return 'Baru saja';
-            if (seconds < 3600) return `${Math.floor(seconds / 60)} menit lalu`;
-            if (seconds < 86400) return `${Math.floor(seconds / 3600)} jam lalu`;
-            if (seconds < 604800) return `${Math.floor(seconds / 86400)} hari lalu`;
-
-            return date.toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric'
-            });
-        }
-
-
-
-        // Helper function to escape HTML
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
-        }
-
-        // Allow Enter key to submit comment
-        document.addEventListener('DOMContentLoaded', function() {
-            const commentName = document.getElementById('commentName');
-            const commentText = document.getElementById('commentText');
-
-            if (commentName) {
-                commentName.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        addComment();
-                    }
+            const response = await fetch(linkGist + "?t=" + new Date().getTime());
+            const teks = await response.text();
+            const baris = teks.split('\n');
+            if(baris[0]) box.innerHTML = `<span style="color:var(--text-main); font-weight:600;">INFO:</span> ${baris[0]}`;
+            
+            const fotoLinks = baris.slice(1).filter(link => link.trim().startsWith('http'));
+            if(fotoLinks.length > 0) {
+                container.innerHTML = "";
+                fotoLinks.forEach(url => {
+                    const div = document.createElement('div');
+                    div.className = 'album-item';
+                    div.onclick = () => zoomFoto(url.trim());
+                    div.innerHTML = `<img src="${url.trim()}" loading="lazy">`;
+                    container.appendChild(div);
                 });
             }
+        } catch (err) { box.innerText = "Gagal memuat info."; }
+        finally { setTimeout(() => { refreshIcon.classList.remove('spin'); }, 500); }
+    }
+    window.addEventListener('DOMContentLoaded', muatData);
+            
+    function showGalaxiaAlert(message, title = "Info", isError = false) {
+        const overlay = document.getElementById('customAlert');
+        const titleEl = document.getElementById('alertTitle');
+        const msgEl = document.getElementById('alertMessage');
+        const iconEl = document.getElementById('alertIcon');
+        
+        titleEl.innerText = title;
+        msgEl.innerText = message;
+        
+        if (isError) {
+            titleEl.style.color = "#dc2626";
+            iconEl.setAttribute('data-lucide', 'alert-triangle');
+            iconEl.style.color = "#dc2626";
+            document.querySelector('.alert-icon-circle').style.background = "#fef2f2";
+        } else {
+            titleEl.style.color = "var(--text-main)";
+            iconEl.setAttribute('data-lucide', 'info');
+            iconEl.style.color = "var(--text-main)";
+            document.querySelector('.alert-icon-circle').style.background = "var(--surface-2)";
+        }
+        lucide.createIcons();
+        overlay.classList.add('active');
+        overlay.style.opacity = "1";
+        overlay.style.visibility = "visible";
+    }
 
-            if (commentText) {
-                commentText.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' && e.ctrlKey) {
-                        e.preventDefault();
-                        addComment();
-                    }
-                });
-            }
-        });
-    </script>
+    function closeCustomAlert() {
+        const overlay = document.getElementById('customAlert');
+        overlay.style.opacity = "0";
+        setTimeout(() => { overlay.style.visibility = "hidden"; overlay.classList.remove('active'); }, 300);
+    }
+    window.showGalaxiaAlert = showGalaxiaAlert;
+</script>
 </body>
 </html>
